@@ -12,6 +12,7 @@ def vizinho_aleatorio(estado_atual):
 
         possivel_estado[idx] += delta
         if objetivo(possivel_estado) != PENALIDADE:
+            # print(possivel_estado)
             return possivel_estado
 
 def resfriar_temperatura(t):
@@ -34,7 +35,7 @@ def objetivo(solucao):
     
 
 def simulated_annealing():
-    estado = np.array([0, 0, 0, 0])
+    estado = np.array([0.0, 0.0, 0.0, 0.0])
     melhor = estado
     t = 100
     t_min = 0.1
@@ -55,6 +56,9 @@ def simulated_annealing():
 
         t = resfriar_temperatura(t)
         i += 1
+
+        # Dentro do loop while do SA:
+        # print(f"Atual: {objetivo(estado)} | Candidato: {objetivo(vizinho)} | Delta: {delta}")
     
     print(f"iteracoes: {i}")
     return melhor
