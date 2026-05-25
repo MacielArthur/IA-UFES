@@ -7,7 +7,7 @@ PENALIDADE = -999999
 def vizinho_aleatorio(estado_atual):
     while True:
         possivel_estado = estado_atual.copy()
-        idx = random.choice([0, 1, 2])
+        idx = random.choice([0, 1, 2, 3])
         delta = random.choice([1, -1])
 
         possivel_estado[idx] += delta
@@ -23,17 +23,18 @@ def objetivo(solucao):
     a = solucao[0]
     b = solucao[1]
     c = solucao[2]
+    d = solucao[3]
 
-    total = 30*a + 50*b + 40*c
+    total = (50*a - 1.2*a**2) + (45*b - b**2) + (40*c - 0.8*c**2) + (55*d - 1.5*d**2)
 
-    if 2*a + 4*b + 3*c > 100 or 3*a + 2*b + 4*c > 90 or a < 0 or b < 0 or c < 0:
+    if (a+b+c+d > 50) or (c+d > 25) or (2*a + b + 3*c + 2*d > 80) or (a < 0 or b < 0 or c < 0 or d < 0):
         return PENALIDADE
     else:
         return total
     
 
 def simulated_annealing():
-    estado = np.array([0, 0, 0])
+    estado = np.array([0, 0, 0, 0])
     melhor = estado
     t = 100
     t_min = 0.1
@@ -64,4 +65,4 @@ if __name__ == "__main__":
 
     print("Melhor estado encontrado: ", solucao, "lucro total: ", objetivo(solucao))
 
-# Melhor estado encontrado:  [20 15  0] lucro total:  1350 - (0.9999 cooling rate)
+# Melhor estado encontrado:  [12 17  5 12] lucro total:  1527.2 - (0.9999 cooling rate)
